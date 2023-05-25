@@ -126,6 +126,7 @@ public class PAREnet_NetworkConstructionInput {
     }
 
     public void loadFromJson(File inputJson) throws IOException {
+        /*
         JsonObject jsonObject = null;
 
         jsonObject = JsonUtils.parseJsonFile(inputJson);
@@ -287,5 +288,6 @@ public class PAREnet_NetworkConstructionInput {
             }
 
         }
+                */
     }
 }

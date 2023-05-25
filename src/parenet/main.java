@@ -536,7 +536,7 @@ public class main {
         String alignedFile = outputDirectory + File.separator + sRNAs.getName() + "_" + longReads.getName() + ".patman";
 
         File patmanOutput = new File(alignedFile);
-
+/*
         PatmanParams newP_Params = new PatmanParams();
         newP_Params.setMaxGaps(gaps);
         newP_Params.setMaxMismatches(mismatches);
@@ -561,6 +561,7 @@ public class main {
             ex.printStackTrace();
         }
         tmpDir.deleteOnExit();
+*/
         return patmanOutput;
     }
     

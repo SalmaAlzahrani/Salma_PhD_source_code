@@ -20,13 +20,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import uk.ac.uea.cmp.srnaworkbench.tools.paresnip2.Engine;
-import uk.ac.uea.cmp.srnaworkbench.tools.paresnip2.RuleSet;
-import uk.ac.uea.cmp.srnaworkbench.tools.paresnip2.fileinput.Paresnip2Configuration;
-import uk.ac.uea.cmp.srnaworkbench.tools.paresnip2.fileinput.Paresnip2InputFiles;
-import uk.ac.uea.cmp.srnaworkbench.utils.patman.PatmanParams;
-import uk.ac.uea.cmp.srnaworkbench.utils.patman.PatmanRunner;
-
 /**
  *
  * @author Salma Alzahrani
@@ -329,7 +322,7 @@ public class ParenetMain {
         String alignedFile = outputDirectory + File.separator + sRNAs.getName() + "_" + longReads.getName() + ".patman";
 
         File patmanOutput = new File(alignedFile);
-
+/*
         PatmanParams newP_Params = new PatmanParams();
         newP_Params.setMaxGaps(gaps);
         newP_Params.setMaxMismatches(mismatches);
@@ -353,6 +346,7 @@ public class ParenetMain {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+*/
         return patmanOutput;
     }
     
@@ -495,6 +489,7 @@ public class ParenetMain {
     }
      
      private void performPAREsnip2Analysis() {
+/*
         // Initiliasing and setting PAREsnip2 configuration 
         Paresnip2Configuration ps2Config = Paresnip2Configuration.getInstance();
         RuleSet ps2Ruleset = RuleSet.getRuleSet();
@@ -546,6 +541,7 @@ public class ParenetMain {
         }
         
         Engine ps2_engine = new Engine();
+*/
     }
     
     
