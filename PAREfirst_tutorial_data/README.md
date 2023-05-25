@@ -2,7 +2,7 @@ This is the tutorial data for PAREfirst.
 
 To perform an analysis using PAREfirst, please download the latest version of the UEA sRNA Workbench:
 
-https://sourceforge.net/projects/srnaworkbench/files/latest/download
+https://sourceforge.net/projects/srnaworkbench/files
 
 You can run PAREfirst through the graphical user interface or through the command line. 
 
