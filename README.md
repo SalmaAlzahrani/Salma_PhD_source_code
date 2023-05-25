@@ -1,6 +1,4 @@
-This is a link to the source code of the tool, PAREnet, that I implemeted and presented in my PhD thesis.
-
-Since the tool is integrated within the UEA sRNA Workbench, there are some missing dependencies in the code.
+The repository contains the source code and tutorial data of the PAREnet tool that I implemeted and presented in my PhD thesis.
 
 To run PAREnet, please download the latest version of the sRNA Workbench:
 
