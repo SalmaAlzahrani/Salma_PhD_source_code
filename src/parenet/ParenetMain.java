@@ -322,7 +322,7 @@ public class ParenetMain {
         String alignedFile = outputDirectory + File.separator + sRNAs.getName() + "_" + longReads.getName() + ".patman";
 
         File patmanOutput = new File(alignedFile);
-/*
+
         PatmanParams newP_Params = new PatmanParams();
         newP_Params.setMaxGaps(gaps);
         newP_Params.setMaxMismatches(mismatches);
@@ -346,7 +346,7 @@ public class ParenetMain {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-*/
+
         return patmanOutput;
     }
     
@@ -489,7 +489,7 @@ public class ParenetMain {
     }
      
      private void performPAREsnip2Analysis() {
-/*
+
         // Initiliasing and setting PAREsnip2 configuration 
         Paresnip2Configuration ps2Config = Paresnip2Configuration.getInstance();
         RuleSet ps2Ruleset = RuleSet.getRuleSet();
@@ -541,7 +541,7 @@ public class ParenetMain {
         }
         
         Engine ps2_engine = new Engine();
-*/
+
     }
     
     
