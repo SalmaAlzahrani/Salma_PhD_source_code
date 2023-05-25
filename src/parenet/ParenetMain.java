@@ -122,6 +122,7 @@ public class ParenetMain {
         System.out.println("You can find the results in: " + outFile.getAbsolutePath());
     }
     
+    // write unique sequences to FASTA file
     private void writeToFasta(Set<String> seqs, File file){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
@@ -138,11 +139,12 @@ public class ParenetMain {
         }
     }
     
+    // Annotate valid miRNA using miRBase input file
     private  HashMap<String,String> setMirnaAnnotation(Map<String, Set<Interaction>> interactions, File srnasFile){
         System.out.println("Annotating valid miRNAs ...");
         File miRNAs = input.getMiRBaseFile();
         HashMap<String,String> functional_mirnas = new HashMap();
-
+        // align sRNAs to valid miRNAs with 2 mismatches to include isomirs
         File miRNAAlignment = patmanMapping(srnasFile, miRNAs, srnasFile.getParentFile().getAbsolutePath(), 0, 2);
         miRNAAlignment.deleteOnExit();
         HashSet<String> miRNAAlignedReads = getPatmanLines(miRNAAlignment);
@@ -163,10 +165,12 @@ public class ParenetMain {
         return functional_mirnas;
     }
     
+    // Identify the tareget mRNAs that are also source for functional sRNAs
     private  void setSourceGene(Map<String, Set<Interaction>> interactions, Map<String, Set<String>> interactions_mrna_srna, File srnasFile){
         System.out.println("Setting source genes ...");
         File transcriptome = input.getTranscript();
         
+        // align sRNAs to transcripts with exact match
         File sRNAAlignment = patmanMapping(srnasFile, transcriptome, srnasFile.getParentFile().getAbsolutePath(), 0, 0);
         sRNAAlignment.deleteOnExit();
         
@@ -186,15 +190,17 @@ public class ParenetMain {
             
             String mirid = srna;
             boolean ismirna = false;
-            // To retrieve miRNA annotation
+            // To retrieve miRNA annotation (if any)
             for(Interaction i : interactions.get(srna)){
                 mirid = i.getMiRid();
                 ismirna = i.isIsKnownMirna();
                 break;
         }
             Transcript mRNA = targetedTranscripts.get(gene_id);
+            // identify this mRNA as a source gene
             mRNA.setSource();
-
+            
+            // create new source interaction
             Interaction new_i = new Interaction(srna, mirid, ismirna, mRNA);
 
             if(!interactions.get(srna).contains(new_i)){
@@ -211,7 +217,7 @@ public class ParenetMain {
         }
     }
     
-    
+    // annotate the experimentally validated interactions that are within the results
     private void setValidInteractions(Map<String, Set<Interaction>> interactions, HashMap<String,String> functional_mirnas ){
         System.out.println("Annotating experimentally validated targets ...");
         Map<String, List<String>> validInteractions = new HashMap();
@@ -236,6 +242,7 @@ public class ParenetMain {
         }
     }
     
+    // read experimentally validated targets from miRtarBase file (if provided)
     private void readMitarbaseValidTargets(File validFile , Map<String, List<String>> validInteractions){
         try {
             BufferedReader br = new BufferedReader(new FileReader(validFile));
@@ -259,19 +266,21 @@ public class ParenetMain {
     }
   
 
+    // Filter other non-coding RNAs: tRNA, rRNA, snoRNA ...
     private static Set<String> removeOtherRNAs(File srnasFile) {
         
         System.out.println("Removing other non coding RNAs ...");
-        File tRNA, rRNA;
+        File t_r_RNA, Rfam;
         // Update directories
-        tRNA = new File("/Users/salmayz/WorkbenchFull/data/t_and_r_RNAs.fa");
-        rRNA = new File("/Users/salmayz/WorkbenchFull/data/Rfam.fasta");
+        t_r_RNA = new File("/Users/salmayz/WorkbenchFull/data/t_and_r_RNAs.fa");
+        Rfam = new File("/Users/salmayz/WorkbenchFull/data/Rfam.fasta");
 
         Set<String> seqs = new HashSet();
-
-        File tRNAAlignment = patmanMapping(srnasFile, tRNA, srnasFile.getParentFile().getAbsolutePath(), 0, 0);
+        // Align sRNAs to tRNA and rRNA
+        File tRNAAlignment = patmanMapping(srnasFile, t_r_RNA, srnasFile.getParentFile().getAbsolutePath(), 0, 0);
         tRNAAlignment.deleteOnExit();
-        File rRNAAlignment = patmanMapping(srnasFile, rRNA, srnasFile.getParentFile().getAbsolutePath(), 0, 0);
+        // Align sRNAs to Rfam file
+        File rRNAAlignment = patmanMapping(srnasFile, Rfam, srnasFile.getParentFile().getAbsolutePath(), 0, 0);
         rRNAAlignment.deleteOnExit();
         
         HashSet<String> tRNAAlignedReads = getPatmanSeqs(tRNAAlignment);
@@ -283,7 +292,7 @@ public class ParenetMain {
         return seqs;
     }
     
-    
+    // Parse patman file to get aligned sequences
     private static HashSet<String> getPatmanSeqs(File alignmentFile) {
         HashSet<String> alignedReads = new HashSet();
 
@@ -302,6 +311,7 @@ public class ParenetMain {
         return alignedReads;
     }
     
+    // Read and store patman file
     private static HashSet<String> getPatmanLines(File alignmentFile) {
         HashSet<String> line_seq =  new HashSet();
         
@@ -317,6 +327,7 @@ public class ParenetMain {
         return line_seq;
     }
     
+    // sequence alignemt using PatMaN
     private static File patmanMapping(File sRNAs, File longReads, String outputDirectory, int gaps, int mismatches) {
 
         String alignedFile = outputDirectory + File.separator + sRNAs.getName() + "_" + longReads.getName() + ".patman";
@@ -350,7 +361,7 @@ public class ParenetMain {
         return patmanOutput;
     }
     
-    // If PAREnip2 output file was provided
+    // If PAREnip2 output file was provided, parse file to get functional sRNAs
     private HashSet<String> getFunctionalsRNAs(File ps2_out_file){
         HashSet<String> functional_srnas = new HashSet();
         
@@ -446,7 +457,7 @@ public class ParenetMain {
         }
     }
     
-  
+    // get sRNAs from sRNAome FASTA file
     static Set<String> getSeqsFasta(File seqsFile) {
 
         HashSet<String> seqs = new HashSet();
@@ -465,6 +476,7 @@ public class ParenetMain {
         return seqs;
     }
     
+    // Write the final results
      private static void writeResultsFile( Map<String, Set<Interaction>> interactions, File toWrite) {
          System.out.println("Writing results to output file ...");
          // Results header
@@ -488,6 +500,7 @@ public class ParenetMain {
         }
     }
      
+     // To perform PAREsnip2 analysis using PAREsnip2 module 
      private void performPAREsnip2Analysis() {
 
         // Initiliasing and setting PAREsnip2 configuration 
@@ -539,7 +552,7 @@ public class ParenetMain {
         }
             ps2_input.addGenome(input.getGenomeFile());
         }
-        
+        // create PAREsnip2 module
         Engine ps2_engine = new Engine();
 
     }

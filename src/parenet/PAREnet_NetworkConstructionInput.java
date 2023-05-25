@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-//import javax.json.JsonObject;
-//import uk.ac.uea.cmp.srnaworkbench.utils.JsonUtils;
+import javax.json.JsonObject;
+import uk.ac.uea.cmp.srnaworkbench.utils.JsonUtils;
 
 /**
  *
@@ -125,8 +125,9 @@ public class PAREnet_NetworkConstructionInput {
         this.genomeFile = genomeFile;
     }
 
+    // Load input files from json configuration file
     public void loadFromJson(File inputJson) throws IOException {
-        /*
+        
         JsonObject jsonObject = null;
 
         jsonObject = JsonUtils.parseJsonFile(inputJson);
@@ -288,6 +289,6 @@ public class PAREnet_NetworkConstructionInput {
             }
 
         }
-                */
+                
     }
 }
