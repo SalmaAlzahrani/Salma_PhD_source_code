@@ -1,12 +1,10 @@
-This is the tutorial data for PAREfirst. 
+This is the tutorial data for PAREnet. 
 
-To perform an analysis using PAREfirst, please download the latest version of the UEA sRNA Workbench:
+To perform an analysis using PAREnet, please download the latest version of the UEA sRNA Workbench:
 
 https://sourceforge.net/projects/srnaworkbench/files
 
-You can run PAREfirst through the graphical user interface or through the command line. 
+You can run PAREnet through the command line interface using the command-line that can be found below:
 
-An example of how to run PAREfirst using the command-line can be found below:
-
-java -jar -Xmx8g Workbench.jar -tool parefirst -config default_parefirst.json
+java -jar Workbench.jar -tool parenet -config default_parenet.json
 
